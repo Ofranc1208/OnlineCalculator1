@@ -325,10 +325,10 @@ function showExtendedPayouts(isLCP) {
 ========================================== */
 function calculateAdditionalPayouts(isLCP) {
   const base = parseFloat(document.getElementById("calculator-discountRate").value) / 100;
-  const minSp= parseFloat(document.querySelector('[data-key="minimum-payout"]').dataset.rateSpread || 0);
-  const maxSp= parseFloat(document.querySelector('[data-key="maximum-payout"]').dataset.rateSpread || 0);
+  const minSp = parseFloat(document.querySelector('[data-key="minimum-payout"]').dataset.rateSpread || 0);
+  const maxSp = parseFloat(document.querySelector('[data-key="maximum-payout"]').dataset.rateSpread || 0);
 
-  /* NEW: if Life-Contingent → include profile adjustments */
+  // Life Contingent logic: add LCP profile adjustment to base rate
   let rateForMin = base + minSp;
   let rateForMax = base + maxSp;
 
@@ -338,19 +338,51 @@ function calculateAdditionalPayouts(isLCP) {
     rateForMax = adjRateBase + maxSp;
   }
 
-  const npvMin = calcNPVAnyRate(rateForMin);
-  const npvMax = calcNPVAnyRate(rateForMax);
+const npvMin = calcNPVAnyRate(rateForMin);
+const npvMax = calcNPVAnyRate(rateForMax);
 
-  const minAdj = getAdjustmentByKey("minimum-payout");
-  const maxAdj = getAdjustmentByKey("maximum-payout");
+const minAdj = getAdjustmentByKey("minimum-payout");
+const maxAdj = getAdjustmentByKey("maximum-payout");
 
-  const minPay = Math.ceil((npvMin - minAdj) / 100) * 100;
-  const maxPay = Math.ceil((npvMax - maxAdj) / 100) * 100;
+// Subtract adjustments, round up to nearest $100
+let minPay = Math.ceil((npvMin - minAdj) / 100) * 100;
+let maxPay = Math.ceil((npvMax - maxAdj) / 100) * 100;
 
+// ✅ Ensure values are not negative
+minPay = Math.max(0, minPay);
+maxPay = Math.max(0, maxPay);
+
+// ✅ Ensure max is not less than min
+if (minPay > maxPay) {
+  const temp = minPay;
+  minPay = maxPay;
+  maxPay = temp;
+}
+
+// ✅ Display result
+document.getElementById("calculator-minPayout").innerText =
+  `$${minPay.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+document.getElementById("calculator-maxPayout").innerText =
+  `$${maxPay.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+
+  // ✅ Set payout values, with negative guard
   document.getElementById("calculator-minPayout").innerText =
-    `$${minPay.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+    `$${Math.max(0, minPay).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
   document.getElementById("calculator-maxPayout").innerText =
-    `$${maxPay.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+    `$${Math.max(0, maxPay).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  // 👉 Pulse animation trigger for max offer highlight
+  const maxItem = document.querySelector(".offer-item.max");
+  if (maxItem) {
+    maxItem.classList.remove("animate");
+    void maxItem.offsetWidth; // Reflow trick to restart animation
+    setTimeout(() => {
+      maxItem.classList.add("animate");
+    }, 10);
+  }
 }
 
 /* ==========================================
@@ -365,14 +397,19 @@ function calculateFamilyProtectionValue(npv, isLCP) {
       const rounded = Math.round(guaranteed / 10000) * 10000;
       el.innerText  = `$${rounded.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
     } else {
-      el.innerText = "";
+      el.innerText = 'No Offer'; // ✅ Just changed this one line
     }
   } else {                                      // Life-Contingent
     const alt    = calculateNPV_FamilyProtection();
     const rounded= Math.round(alt / 10000) * 10000;
-    el.innerText = `$${rounded.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+    if (rounded <= 0 || isNaN(rounded)) {
+      el.innerText = 'No Offer';
+    } else {
+      el.innerText = `$${rounded.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+    }
   }
 }
+
 
 /* ALT NPV for life-contingent family protection */
 function calculateNPV_FamilyProtection() {
@@ -424,7 +461,8 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
     // Create tooltip box
     const box = document.createElement('div');
     box.className = 'what-is-it-box';
-    box.textContent = trigger.getAttribute('data-definition');
+    box.innerHTML = trigger.getAttribute('data-definition');
+
 
     // Append to DOM
     document.body.appendChild(overlay);
@@ -445,6 +483,8 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
 
 
 // 🔐 Unlock Modal + OTP + Firestore Integration
+
+
 (function () {
   // Show unlock steps
   function showUnlockStep(stepId) {
@@ -466,7 +506,7 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
     if (typeof originalShowExtendedPayouts === "function") {
       originalShowExtendedPayouts(isLCP);
     }
-    setTimeout(showUnlockModal, 7000);
+    setTimeout(showUnlockModal, 8000);
   };
 
   // Firebase INIT
@@ -481,7 +521,7 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
     }
   });
 
-  // 🔧 Render it!
+  // 🔧 Render reCAPTCHA
   window.recaptchaVerifier.render().then(function (widgetId) {
     window.recaptchaWidgetId = widgetId;
   });
@@ -500,7 +540,6 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
       return;
     }
 
-    // Send OTP
     auth.signInWithPhoneNumber(fullPhone, window.recaptchaVerifier)
       .then(result => {
         window.confirmationResult = result;
@@ -513,7 +552,7 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
       });
   });
 
-  // OTP → Success + Firestore
+  // ✅ OTP → Success + Firestore
   document.getElementById("unlock-otp-submit").addEventListener("click", () => {
     const code = Array.from(document.querySelectorAll(".unlock-otp-input"))
       .map(i => i.value).join("");
@@ -527,17 +566,33 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
       .then(result => {
         const phoneNumber = result.user.phoneNumber;
 
-        // Save to Firestore
+        // 🔍 Grab calculator values
+        const paymentAmount = document.getElementById("calculator-paymentAmount")?.value || null;
+        const minOffer = document.getElementById("calculator-minPayout")?.innerText || null;
+        const maxOffer = document.getElementById("calculator-maxPayout")?.innerText || null;
+        const paymentMode = document.querySelector(".calculator-mode-button.selected-mode")?.dataset.mode || null;
+        const increaseRate = document.querySelector(".calculator-increase-button.selected-increase")?.dataset.rate || null;
+
         db.collection("verifiedPhones").add({
           phone: phoneNumber,
+          paymentAmount: paymentAmount,
+          paymentMode: paymentMode,
+          annualIncrease: increaseRate,
+          minOffer: minOffer,
+          maxOffer: maxOffer,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
-          .then(() => {
-            console.log("📁 Phone saved to Firestore:", phoneNumber);
-          })
-          .catch(err => {
-            console.error("❌ Firestore error:", err);
+        .then(() => {
+          console.log("📁 Full record saved to Firestore:", {
+            phone: phoneNumber,
+            paymentAmount,
+            minOffer,
+            maxOffer
           });
+        })
+        .catch(err => {
+          console.error("❌ Firestore error:", err);
+        });
 
         showUnlockStep("unlock-step-success");
         setTimeout(() => {
@@ -550,4 +605,4 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
         alert("Incorrect OTP. Please try again. " + error.message);
       });
   });
-})(); // ✅ Cleanly closed the IIFE
+})(); // ✅ Closes IIFE cleanly
