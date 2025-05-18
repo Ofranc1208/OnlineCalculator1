@@ -122,7 +122,7 @@
             <input 
                 type="number" 
                 id="calculator-discountRate" 
-                value="8.00" 
+                value="8.50" 
                 step="0.01"
             />
       </div>
@@ -228,11 +228,11 @@
             </p>
 
             <ul id="extended-payout-results" class="offer-list">
-            <li class="offer-item">
+            <li class="offer-item min">
                 <span class="offer-label">Minimum Offer</span>
                 <span id="calculator-minPayout" class="offer-value">$0.00</span>
             </li>
-            <li class="offer-item">
+            <li class="offer-item max">
                 <span class="offer-label">Maximum Offer</span>
                 <span id="calculator-maxPayout" class="offer-value">$0.00</span>
             </li>
@@ -241,6 +241,7 @@
                 <span id="calculator-familyProtection" class="offer-value">$0.00</span>
             </li>
             </ul>
+
 
             <button id="step3-backBtn" class="offer-back">Back</button>
 
@@ -298,41 +299,42 @@
 
     <div id="adjustment-config" style="display:none">
 
-      <div data-key="underweight"   data-adjustment="0.01"></div>
-      <div data-key="normal"        data-adjustment="0"></div>
-      <div data-key="overweight"    data-adjustment="0.02"></div>
-      <div data-key="obese"         data-adjustment="0.035"></div>
-      <div data-key="severe-obese"  data-adjustment="0.05"></div>
+        <div data-key="underweight"   data-adjustment="0.015"></div>
+        <div data-key="normal"        data-adjustment="0"></div>
+        <div data-key="overweight"    data-adjustment="0.03"></div>
+        <div data-key="obese"         data-adjustment="0.06"></div>
+        <div data-key="severe-obese"  data-adjustment="0.09"></div>
 
-      <div data-key="gender-male"   data-adjustment="0"></div>
-      <div data-key="gender-female" data-adjustment="-0.01"></div>
+        <div data-key="gender-male"   data-adjustment="0"></div>
+        <div data-key="gender-female" data-adjustment="-0.01"></div>
 
-      <div data-key="build-small"   data-adjustment="-0.005"></div>
-      <div data-key="build-medium"  data-adjustment="0"></div>
-      <div data-key="build-tall"    data-adjustment="0.005"></div>
+        <div data-key="build-small"   data-adjustment="-0.005"></div>
+        <div data-key="build-medium"  data-adjustment="0"></div>
+        <div data-key="build-tall"    data-adjustment="0.005"></div>
 
-      <div data-key="smoke-yes"     data-adjustment="0.015"></div>
-      <div data-key="smoke-no"      data-adjustment="0"></div>
+        <div data-key="smoke-yes"     data-adjustment="0.03"></div>
+        <div data-key="smoke-no"      data-adjustment="0"></div>
 
-      <div data-key="health-great"     data-adjustment="-0.01"></div>
-      <div data-key="health-normal"    data-adjustment="0"></div>
-      <div data-key="health-fair"      data-adjustment="0.015"></div>
-      <div data-key="health-belowfair" data-adjustment="0.025"></div>
+        <div data-key="health-great"     data-adjustment="-0.015"></div>
+        <div data-key="health-normal"    data-adjustment="0"></div>
+        <div data-key="health-fair"      data-adjustment="0.025"></div>
+        <div data-key="health-belowfair" data-adjustment="0.04"></div>
 
-      <div data-key="cardiac-normal"    data-adjustment="0"></div>
-      <div data-key="cardiac-medicated" data-adjustment="0.01"></div>
-      <div data-key="cardiac-high"      data-adjustment="0.02"></div>
-      <div data-key="cardiac-unsure"    data-adjustment="0.015"></div>
+        <div data-key="cardiac-normal"    data-adjustment="0"></div>
+        <div data-key="cardiac-medicated" data-adjustment="0.02"></div>
+        <div data-key="cardiac-high"      data-adjustment="0.05"></div>
+        <div data-key="cardiac-unsure"    data-adjustment="0.03"></div>
 
-      <div data-key="age-18-25" data-adjustment="0"></div>
-      <div data-key="age-26-35" data-adjustment="0.005"></div>
-      <div data-key="age-36-45" data-adjustment="0.01"></div>
-      <div data-key="age-46-50" data-adjustment="0.015"></div>
-      <div data-key="age-51-56" data-adjustment="0.02"></div>
-      <div data-key="age-57-65" data-adjustment="0.03"></div>
+        <div data-key="age-18-25" data-adjustment="0"></div>
+        <div data-key="age-26-35" data-adjustment="0.01"></div>
+        <div data-key="age-36-45" data-adjustment="0.02"></div>
+        <div data-key="age-46-50" data-adjustment="0.03"></div>
+        <div data-key="age-51-56" data-adjustment="0.045"></div>
+        <div data-key="age-57-65" data-adjustment="0.06"></div>
 
-      <div data-key="minimum-payout" data-adjustment="4500" data-rate-spread="0.03"></div>
-      <div data-key="maximum-payout" data-adjustment="5500" data-rate-spread="0.02"></div>
+
+      <div data-key="minimum-payout" data-adjustment="25000" data-rate-spread="0.06"></div>
+      <div data-key="maximum-payout" data-adjustment="25000" data-rate-spread="0.03"></div>
 
       <div data-key="family-protection-guaranteed" data-adjustment="25000"></div>
 
