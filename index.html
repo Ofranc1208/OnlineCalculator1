@@ -17,7 +17,28 @@
 
       <div class="what-is-it-label-wrapper">
         <label class="calculator-label">Type of Payment</label>
-       <span class="what-is-it-trigger" data-definition="This refers to the structure of the payment you will receive, such as guaranteed or life contingent.">( More Info )</span>
+
+        <span class="what-is-it-trigger"
+        data-definition="
+        <strong>Payment Type</strong><br>
+        Refers to the structure of your settlement payments:<br><br>
+
+        <strong>Guaranteed</strong><br>
+        You’ll receive payments for a set period, even if you pass away before it ends.<br><br>
+
+        <strong>Life Contingent</strong><br>
+        Payments are for the life of the annuitant. Payments stop if the recipient passes away.<br><br>
+
+        <strong>I Don’t Know</strong><br>
+        Choose this if you're unsure which type applies to you.">
+        ( More Info )
+        </span>
+
+
+
+
+
+
 
       </div>
 
@@ -35,7 +56,28 @@
 
        <div class="what-is-it-label-wrapper">
         <label class="calculator-label">Payment Mode</label>
-       <span class="what-is-it-trigger" data-definition="This refers to the structure of the payment you will receive, such as guaranteed or life contingent.">( More Info )</span>
+      <span class="what-is-it-trigger"
+            data-definition="
+            <strong>Payment Mode</strong><br>
+            Refers to how often you will receive your settlement payments:<br><br>
+
+            <strong>Monthly</strong><br>
+            You’ll receive a payment every month.<br><br>
+
+            <strong>Quarterly</strong><br>
+            You’ll receive a payment every 3 months (4 times a year).<br><br>
+
+            <strong>Semiannually</strong><br>
+            You’ll receive a payment every 6 months (2 times a year).<br><br>
+
+            <strong>Annually</strong><br>
+            You’ll receive a single payment once per year.<br><br>
+
+            <strong>Lump Sum</strong><br>
+            You’ll receive the full payment amount all at once, instead of over time.">
+            ( More Info )
+            </span>
+
 
       </div>
 
@@ -50,11 +92,20 @@
 
       <div class="calculator-section">
         
-              
-        <div class="what-is-it-label-wrapper">
-        <label class="calculator-label">Payment Amount ($)</label>
-        <span class="what-is-it-trigger" data-definition="This refers to the structure of the payment you will receive, such as guaranteed or life contingent."> ( More Info ) </span>
-      </div>
+     <div class="what-is-it-label-wrapper">
+            <label class="calculator-label">Payment Amount ($)</label>
+            <span class="what-is-it-trigger" 
+                data-definition="
+            <strong>Payment Amount</strong><br>
+            Enter the amount you are scheduled to receive in each payment.<br><br>
+
+            For example, if you receive $500 every month, enter 500 here.<br><br>
+
+            Make sure the amount you enter is between $100 and $1,000,000. This value helps us calculate your early payout offer.">
+                ( More Info )
+            </span>
+            </div>
+
 
         <input 
         type="number"
@@ -72,9 +123,18 @@
       <div class="calculator-section">
 
           <div class="what-is-it-label-wrapper">
-          <label class="calculator-label">Annual Increase (%)</label>
-          <span class="what-is-it-trigger" data-definition="This refers to the structure of the payment you will      receive, such as guaranteed or life contingent."> ( More Info ) </span>
-          </div>
+        <label class="calculator-label">Annual Increase (%)</label>
+      <span class="what-is-it-trigger" 
+            data-definition="
+            <strong>Annual Increase</strong><br>
+            This refers to the annuitant’s date of birth. It’s used in life-contingent payout calculations to estimate life expectancy and adjust the discount rate.<br><br>
+
+            Providing an accurate birthdate ensures your payout offer reflects your true benefit value.">
+            ( More Info )
+        </span>
+
+        </div>
+
         
       
 
@@ -95,7 +155,16 @@
 
       <div class="what-is-it-label-wrapper">
         <label class="calculator-label" for="calculator-startDate">Payment Start Date</label>
-        <span class="what-is-it-trigger" data-definition="This is the date when your payments will begin. Make sure it's after today.">( More Info )</span>
+       <span class="what-is-it-trigger" 
+         data-definition="
+        <strong>Payment Start Date</strong><br>
+            This is the date your future payments are scheduled to begin — the payments you want to exchange for a lump sum.<br><br>
+
+            For example: John is currently receiving monthly payments but wants to exchange future payments starting 2 years from now. He would select a date 2 years ahead as the Payment Start Date.<br><br>
+
+            Make sure this is a future date aligned with when the next phase of your payments begins.">
+            ( More Info )
+        </span>
       </div>
       <small id="startDate-error" class="error-message"></small>
       <input type="date" id="calculator-startDate" />
@@ -105,7 +174,14 @@
       <div class="calculator-section">
       <div class="what-is-it-label-wrapper">
       <label class="calculator-label" for="calculator-endDate">Payment End Date</label>
-       <span class="what-is-it-trigger" data-definition="This is the date when your payments will stop. It must be at least 6 months after the start date.">( More Info )</span>
+       <span class="what-is-it-trigger" data-definition="
+        <strong>Payment End Date</strong><br>
+        This is the last date you expect to receive payments — the final payment in the stream you're looking to exchange for a lump sum.<br><br>
+
+        For example: John is receiving monthly payments and wants to exchange his future payments from January 2026 through December 2035. He would set the End Date to December 2035.<br><br>
+
+        The End Date must be at least 6 months after the Start Date to qualify for a lump sum offer."
+        >( More Info )</span>
       </div>
       <input type="date" id="calculator-endDate" />
       <small id="endDate-error" class="error-message"></small>
@@ -141,7 +217,7 @@
     <!-- STEP 2: Life-Contingent profile -->
     <div id="calculator-step-2" style="display:none">
       <div class="lcp-question">
-        <label class="calculator-label">Age</label>
+        <label class="calculator-label">Approximate Age</label>
         <div class="calculator-button-group three-col">
           <button data-key="age-18-25">18–25</button>
           <button data-key="age-26-35">26–35</button>

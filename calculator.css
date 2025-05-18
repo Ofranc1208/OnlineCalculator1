@@ -433,21 +433,26 @@ input.invalid {
 }
 
 /* ========== What Is It Tooltip ========== */
+/* ========== What Is It Tooltip ========== */
+
 .what-is-it-label-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
 .what-is-it-trigger {
   font-size: 13px;
   color: #0073e6;
-  text-decoration: none; /* ← remove underline */
+  text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
 }
 
+.what-is-it-trigger:hover {
+  text-decoration: underline;
+}
 
 .what-is-it-overlay {
   position: fixed;
@@ -466,31 +471,35 @@ input.invalid {
   transform: translate(-50%, -50%);
   background: #fff;
   border: 1px solid #ccc;
-  padding: 16px 20px;
-  border-radius: 8px;
-  max-width: 400px;
+  padding: 18px 22px;
+  border-radius: 10px;
+  max-width: 440px;
   width: 90%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
   z-index: 9999;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  text-align: left;
+  white-space: normal;
+}
+
+/* Subheadings like “Guaranteed” */
+.what-is-it-box strong {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 600;
+  color: #111;
+}
+
+/* Paragraph content */
+.what-is-it-box p {
+  margin: 0 0 10px;
   line-height: 1.5;
+  padding-left: 0;
+  text-indent: 0;
 }
 
-.what-is-it-label-wrapper {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 12px; /* ← increased from 6 or 8 to 12 for better spacing */
-  margin-bottom: 6px;
-}
-
-
-.what-is-it-trigger {
-  text-decoration: none;
-}
-
-.what-is-it-trigger:hover {
-  text-decoration: underline;
-}
 
       /* OTP Step*/
   /* Unlock Overlay */

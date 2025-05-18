@@ -461,7 +461,8 @@ document.querySelectorAll('.what-is-it-trigger').forEach(function (trigger) {
     // Create tooltip box
     const box = document.createElement('div');
     box.className = 'what-is-it-box';
-    box.textContent = trigger.getAttribute('data-definition');
+    box.innerHTML = trigger.getAttribute('data-definition');
+
 
     // Append to DOM
     document.body.appendChild(overlay);
